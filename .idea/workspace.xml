@@ -2,17 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f3cba2b-27b8-4510-8220-be5554e03795" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/mysql/conn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/doc/table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/auth.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/view/signup.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/resp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/meta/filemeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/meta/filemeta.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/mysql/conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/mysql/conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -44,7 +63,12 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/view" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/view" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="go build github.com/yuzhikuan/filestore-server" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -77,21 +101,33 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1280" height="204" key="GridCell.Tab.0.bottom" timestamp="1576513960052">
+    <state x="240" y="78" key="#SQL_Dialects" timestamp="1576557894062">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.bottom/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576513960052" />
-    <state width="1280" height="204" key="GridCell.Tab.0.center" timestamp="1576513960051">
+    <state x="240" y="78" key="#SQL_Dialects/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576557894062" />
+    <state x="240" y="78" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576557979363">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.center/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576513960051" />
-    <state width="1280" height="204" key="GridCell.Tab.0.left" timestamp="1576513960050">
+    <state x="240" y="78" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576557979363" />
+    <state width="1280" height="204" key="GridCell.Tab.0.bottom" timestamp="1576677327036">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.left/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576513960050" />
-    <state width="1280" height="204" key="GridCell.Tab.0.right" timestamp="1576513960051">
+    <state width="1280" height="204" key="GridCell.Tab.0.bottom/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327036" />
+    <state width="1280" height="204" key="GridCell.Tab.0.center" timestamp="1576677327035">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.right/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576513960051" />
+    <state width="1280" height="204" key="GridCell.Tab.0.center/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327035" />
+    <state width="1280" height="204" key="GridCell.Tab.0.left" timestamp="1576677327033">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1280" height="204" key="GridCell.Tab.0.left/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327033" />
+    <state width="1280" height="204" key="GridCell.Tab.0.right" timestamp="1576677327036">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1280" height="204" key="GridCell.Tab.0.right/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327036" />
+    <state x="303" y="65" width="673" height="693" key="find.popup" timestamp="1576595515764">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state x="303" y="65" width="673" height="693" key="find.popup/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576595515764" />
   </component>
 </project>
