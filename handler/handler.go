@@ -3,12 +3,14 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	dblayer "github.com/yuzhikuan/filestore-server/db"
 	"github.com/yuzhikuan/filestore-server/meta"
 	"github.com/yuzhikuan/filestore-server/util"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -22,7 +24,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request)  {
 		io.WriteString(w, string(data))
 	} else if r.Method == "POST" {
 		// 接收文件流及存储到本地目录
-		file, head, err := r.FormFile("upload_file")
+		file, head, err := r.FormFile("file")
 		if err != nil {
 			fmt.Printf("Failed to get data, err: %s", err.Error())
 			return
@@ -51,8 +53,15 @@ func UploadHandler(w http.ResponseWriter, r *http.Request)  {
 		fileMeta.FileSha1 = util.FileSha1(newFile)
 		// meta.UpdateFileMeta(fileMeta)
 		meta.UpdateFileMetaDB(fileMeta)
-
-		http.Redirect(w, r, "/file/upload/suc", http.StatusFound)
+		// 更新用户文件表记录
+		r.ParseForm()
+		username := r.Form.Get("username")
+		suc := dblayer.OnUserFileUploadFinished(username, fileMeta.FileSha1, fileMeta.FileName, fileMeta.FileSize)
+		if suc {
+			http.Redirect(w, r, "/static/view/home.html", http.StatusFound)
+		} else {
+			w.Write([]byte("Upload Failed."))
+		}
 	}
 }
 
@@ -74,6 +83,26 @@ func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data, err := json.Marshal(fMeta)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Write(data)
+}
+
+// 查询批量的文件元信息
+func FileQueryHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	limitCnt, _ := strconv.Atoi(r.Form.Get("limit"))
+	username := r.Form.Get("username")
+
+	userFiles, err := dblayer.QueryUserFileMetas(username, limitCnt)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(userFiles)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

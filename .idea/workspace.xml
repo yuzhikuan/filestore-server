@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f3cba2b-27b8-4510-8220-be5554e03795" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc/table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/auth.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/view/signup.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/resp.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/userfile.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/mysql/conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/mysql/conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/doc/table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/view/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,22 +104,22 @@
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state x="240" y="78" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576557979363" />
-    <state width="1280" height="204" key="GridCell.Tab.0.bottom" timestamp="1576677327036">
+    <state width="1280" height="204" key="GridCell.Tab.0.bottom" timestamp="1576769126203">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.bottom/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327036" />
-    <state width="1280" height="204" key="GridCell.Tab.0.center" timestamp="1576677327035">
+    <state width="1280" height="204" key="GridCell.Tab.0.bottom/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576769126203" />
+    <state width="1280" height="204" key="GridCell.Tab.0.center" timestamp="1576769126201">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.center/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327035" />
-    <state width="1280" height="204" key="GridCell.Tab.0.left" timestamp="1576677327033">
+    <state width="1280" height="204" key="GridCell.Tab.0.center/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576769126201" />
+    <state width="1280" height="204" key="GridCell.Tab.0.left" timestamp="1576769126200">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.left/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327033" />
-    <state width="1280" height="204" key="GridCell.Tab.0.right" timestamp="1576677327036">
+    <state width="1280" height="204" key="GridCell.Tab.0.left/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576769126200" />
+    <state width="1280" height="204" key="GridCell.Tab.0.right" timestamp="1576769126201">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1280" height="204" key="GridCell.Tab.0.right/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576677327036" />
+    <state width="1280" height="204" key="GridCell.Tab.0.right/0.23.1280.777/-601.-1417.2560.1417@0.23.1280.777" timestamp="1576769126201" />
     <state x="303" y="65" width="673" height="693" key="find.popup" timestamp="1576595515764">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
