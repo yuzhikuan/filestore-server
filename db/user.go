@@ -5,16 +5,17 @@ import (
 	mydb "github.com/yuzhikuan/filestore-server/db/mysql"
 )
 
+// User 用户信息
 type User struct {
-	Username string
-	Email string
-	Phone string
-	SignupAt string
+	Username     string
+	Email        string
+	Phone        string
+	SignupAt     string
 	LastActiveAt string
-	Status int
+	Status       int
 }
 
-// 通过用户名及密码完成user表的注册操作
+// UserSignup 通过用户名及密码完成user表的注册操作
 func UserSignup(username string, passwd string) bool {
 	sql := "insert ignore into tbl_user (`user_name`,`user_pwd`) values (?,?)"
 	stmt, err := mydb.DBConn().Prepare(sql)
@@ -35,7 +36,7 @@ func UserSignup(username string, passwd string) bool {
 	return false
 }
 
-// 判断密码是否一致
+// UserSignin 判断密码是否一致
 func UserSignin(username string, encpwd string) bool {
 	sql := "select * from tbl_user where user_name=? limit 1"
 	stmt, err := mydb.DBConn().Prepare(sql)
@@ -60,7 +61,7 @@ func UserSignin(username string, encpwd string) bool {
 	return false
 }
 
-// 更新用户登录的token
+// UpdateToken 更新用户登录的token
 func UpdateToken(username string, token string) bool {
 	sql := "replace into tbl_user_token (`user_name`,`user_token`) values (?,?)"
 	stmt, err := mydb.DBConn().Prepare(sql)
@@ -78,7 +79,7 @@ func UpdateToken(username string, token string) bool {
 	return true
 }
 
-// 查询用户信息
+// GetUserInfo 查询用户信息
 func GetUserInfo(username string) (User, error) {
 	user := User{}
 	sql := "select user_name,signup_at from tbl_user where user_name=? limit 1"

@@ -6,17 +6,17 @@ import (
 	"time"
 )
 
-// 用户文件表结构体
+// UserFile 用户文件表结构体
 type UserFile struct {
-	UserName string
-	FileHash string
-	FileName string
-	FileSize int64
-	UploadAt string
+	UserName    string
+	FileHash    string
+	FileName    string
+	FileSize    int64
+	UploadAt    string
 	LastUpdated string
 }
 
-// 更新用户文件表
+// OnUserFileUploadFinished 更新用户文件表
 func OnUserFileUploadFinished(username, filehash, filename string, filesize int64) bool {
 	sql := "insert ignore tbl_user_file (`user_name`,`file_sha1`,`file_name`,`file_size`,`upload_at`) values (?,?,?,?,?)"
 	stmt, err := mydb.DBConn().Prepare(sql)
@@ -32,7 +32,7 @@ func OnUserFileUploadFinished(username, filehash, filename string, filesize int6
 	return true
 }
 
-// 批量获取用户信息
+// QueryUserFileMetas 批量获取用户文件信息
 func QueryUserFileMetas(username string, limit int) ([]UserFile, error) {
 	sql := "select file_sha1,file_name,file_size,upload_at,last_update from tbl_user_file where user_name=? limit ?"
 	stmt, err := mydb.DBConn().Prepare(sql)

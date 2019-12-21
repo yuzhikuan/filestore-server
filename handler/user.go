@@ -12,7 +12,7 @@ import (
 const pwd_salt = "*#890"
 const token_salt = "_tokensalt"
 
-// 处理用户注册请求
+// SignupHandler 处理用户注册请求
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	// 1.http GET 请求，直接返回注册页面内容
 	if r.Method == http.MethodGet {
@@ -43,7 +43,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// 登录接口
+// SigninHandler 登录接口
 func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	username := r.Form.Get("username")
@@ -70,17 +70,17 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 		Data: struct {
 			Location string
 			Username string
-			Token string
+			Token    string
 		}{
 			Location: "http://" + r.Host + "/static/view/home.html",
 			Username: username,
-			Token: token,
+			Token:    token,
 		},
 	}
 	w.Write(resp.JSONBytes())
 }
 
-// 查询用户信息
+// UserInfoHandler 查询用户信息
 func UserInfoHandler(w http.ResponseWriter, r *http.Request) {
 	// 1.解析请求参数
 	r.ParseForm()
@@ -107,7 +107,7 @@ func UserInfoHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(resp.JSONBytes())
 }
 
-// 产生一个40位的token
+// GenToken 产生一个40位的token
 func GenToken(username string) string {
 	// 40位字符：md5(username + timestamp + token_salt) + timestamp[:8]
 	ts := fmt.Sprintf("%x", time.Now().Unix())
@@ -115,7 +115,7 @@ func GenToken(username string) string {
 	return tokenPrefix + ts[:8]
 }
 
-// 验证token是否有效
+// IsTokenValid 验证token是否有效
 func IsTokenValid(token string) bool {
 	if len(token) != 40 {
 		return false

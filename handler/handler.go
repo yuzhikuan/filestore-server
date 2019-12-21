@@ -14,7 +14,8 @@ import (
 	"time"
 )
 
-func UploadHandler(w http.ResponseWriter, r *http.Request)  {
+// UploadHandler 上传接口
+func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		// 返回上传html页面
 		data, err := ioutil.ReadFile("./static/view/index.html")
@@ -30,7 +31,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request)  {
 			return
 		}
 		defer file.Close()
-		
+
 		fileMeta := meta.FileMeta{
 			FileName: head.Filename,
 			Location: "./tmp/" + head.Filename,
@@ -52,7 +53,8 @@ func UploadHandler(w http.ResponseWriter, r *http.Request)  {
 		newFile.Seek(0, 0)
 		fileMeta.FileSha1 = util.FileSha1(newFile)
 		// meta.UpdateFileMeta(fileMeta)
-		meta.UpdateFileMetaDB(fileMeta)
+		_ = meta.UpdateFileMetaDB(fileMeta)
+
 		// 更新用户文件表记录
 		r.ParseForm()
 		username := r.Form.Get("username")
@@ -65,12 +67,58 @@ func UploadHandler(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
-// 上传成功的提示
+// TryFastUploadHandler 尝试秒传接口
+func TryFastUploadHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	// 1.解析请求参数
+	username := r.Form.Get("username")
+	filehash := r.Form.Get("filehash")
+	filename := r.Form.Get("filename")
+	filesize, _ := strconv.Atoi(r.Form.Get("filesize"))
+
+	// 2.从文件表中查询相同hash的文件记录
+	fileMeta, err := meta.GetFileMetaDB(filehash)
+	if err != nil {
+		fmt.Println(err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// 3.查不到记录则返回秒传失败
+	if fileMeta == (meta.FileMeta{}) {
+		resp := util.RespMsg{
+			Code: -1,
+			Msg:  "秒传失败，请访问普通上传接口",
+		}
+		w.Write(resp.JSONBytes())
+		return
+	}
+
+	// 4.上传过则将文件信息写入用户文件表，返回成功
+	suc := dblayer.OnUserFileUploadFinished(username, filehash, filename, int64(filesize))
+	var resp util.RespMsg
+	if suc {
+		resp = util.RespMsg{
+			Code: 0,
+			Msg:  "秒传成功",
+		}
+	} else {
+		resp = util.RespMsg{
+			Code: -2,
+			Msg:  "秒传失败，请稍后重试",
+		}
+	}
+	w.Write(resp.JSONBytes())
+	return
+}
+
+// UploadSucHandler 上传成功的提示
 func UploadSucHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Upload finished!")
 }
 
-// 获取文件元信息
+// GetFileMetaHandler 获取文件元信息
 func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
@@ -90,7 +138,7 @@ func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-// 查询批量的文件元信息
+// FileQueryHandler 查询批量的文件元信息
 func FileQueryHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	limitCnt, _ := strconv.Atoi(r.Form.Get("limit"))
@@ -110,7 +158,7 @@ func FileQueryHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-// 下载文件
+// DownloadHandler 下载文件
 func DownloadHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
@@ -130,11 +178,11 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/octect-stream")
-	w.Header().Set("Content-Disposition", "attachment;filename=\"" + fm.FileName + "\"")
+	w.Header().Set("Content-Disposition", "attachment;filename=\""+fm.FileName+"\"")
 	w.Write(data)
 }
 
-// 更新元信息接口（重命名）
+// FileMetaUpdateHandler 更新元信息接口（重命名）
 func FileMetaUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
@@ -164,7 +212,7 @@ func FileMetaUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-// 删除文件及元信息
+// FileDeleteHandler 删除文件及元信息
 func FileDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 

@@ -20,12 +20,12 @@ func init() {
 	}
 }
 
-// 返回数据库连接对象
+// DBConn 返回数据库连接对象
 func DBConn() *sql.DB {
 	return db
 }
 
-// 转换数据格式
+// ParseRows 转换数据格式
 func ParseRows(rows *sql.Rows) []map[string]interface{} {
 	columns, _ := rows.Columns()
 	scanArgs := make([]interface{}, len(columns))
