@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-const pwd_salt = "*#890"
-const token_salt = "_tokensalt"
+const pwdSalt = "*#890"
+const tokenSalt = "_tokensalt"
 
 // SignupHandler 处理用户注册请求
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
@@ -33,9 +33,9 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 3.加密用户密码
-	enc_passwd := util.Sha1([]byte(passwd + pwd_salt))
+	encPasswd := util.Sha1([]byte(passwd + pwdSalt))
 	// 4.存入数据库tbl_user表及返回结果
-	suc := dblayer.UserSignup(username, enc_passwd)
+	suc := dblayer.UserSignup(username, encPasswd)
 	if suc {
 		w.Write([]byte("SUCCESS"))
 	} else {
@@ -49,8 +49,8 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.Form.Get("username")
 	password := r.Form.Get("password")
 	// 1.校验用户名及密码
-	enc_passwd := util.Sha1([]byte(password + pwd_salt))
-	pwdChecked := dblayer.UserSignin(username, enc_passwd)
+	encPasswd := util.Sha1([]byte(password + pwdSalt))
+	pwdChecked := dblayer.UserSignin(username, encPasswd)
 	if !pwdChecked {
 		w.Write([]byte("FAILED"))
 		return
@@ -109,9 +109,9 @@ func UserInfoHandler(w http.ResponseWriter, r *http.Request) {
 
 // GenToken 产生一个40位的token
 func GenToken(username string) string {
-	// 40位字符：md5(username + timestamp + token_salt) + timestamp[:8]
+	// 40位字符：md5(username + timestamp + tokenSalt) + timestamp[:8]
 	ts := fmt.Sprintf("%x", time.Now().Unix())
-	tokenPrefix := util.MD5([]byte(username + ts + token_salt))
+	tokenPrefix := util.MD5([]byte(username + ts + tokenSalt))
 	return tokenPrefix + ts[:8]
 }
 

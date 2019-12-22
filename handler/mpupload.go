@@ -1,19 +1,27 @@
 package handler
 
 import (
+	"fmt"
+	"math"
 	"net/http"
+	"os"
+	"path"
 	"strconv"
-	"github.com/yuzhikuan/filestore-server/util"
-	myRedis "github.com/yuzhikuan/filestore-server/redis"
+	"strings"
+	"time"
+
+	"github.com/garyburd/redigo/redis"
 	dblayer "github.com/yuzhikuan/filestore-server/db"
+	myRedis "github.com/yuzhikuan/filestore-server/cache/redis"
+	"github.com/yuzhikuan/filestore-server/util"
 )
 
 // MultipartUploadInfo 初始化信息
 type MultipartUploadInfo struct {
-	FileHash string
-	FileSize int
-	UploadID string
-	ChunkSize int
+	FileHash   string
+	FileSize   int
+	UploadID   string
+	ChunkSize  int
 	ChunkCount int
 }
 
@@ -35,17 +43,17 @@ func InitMultipartUploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 3. 生成分块上传的初始化信息
 	upInfo := MultipartUploadInfo{
-		FileHash: filehash,
-		FileSize: filesize,
-		UploadID: username + fmt.Sprintf("%x", time.Now().UnixNano()),
-		ChunkSize: 5 * 1024 * 1024, // 5MB
+		FileHash:   filehash,
+		FileSize:   filesize,
+		UploadID:   username + fmt.Sprintf("%x", time.Now().UnixNano()),
+		ChunkSize:  5 * 1024 * 1024, // 5MB
 		ChunkCount: int(math.Ceil(float64(filesize) / (5 * 1024 * 1024))),
 	}
 
 	// 4. 将初始化信息写入到redis缓存
-	rConn.Do("HSET", "MP_" + upInfo.UploadID, "chunkcount", upInfo.ChunkCount)
-	rConn.Do("HSET", "MP_" + upInfo.UploadID, "filehash", upInfo.FileHash)
-	rConn.Do("HSET", "MP_" + upInfo.UploadID, "filesize", upInfo.FileSize)
+	rConn.Do("HSET", "MP_"+upInfo.UploadID, "chunkcount", upInfo.ChunkCount)
+	rConn.Do("HSET", "MP_"+upInfo.UploadID, "filehash", upInfo.FileHash)
+	rConn.Do("HSET", "MP_"+upInfo.UploadID, "filesize", upInfo.FileSize)
 
 	// 5. 将初始化信息数据返回到客户端
 	w.Write(util.NewRespMsg(0, "OK", upInfo).JSONBytes())
@@ -126,7 +134,7 @@ func CompleteUploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 4. TODO：合并分块
-	
+
 	// 5. 更新唯一文件表及用户文件表
 	fsize, _ := strconv.Atoi(filesize)
 	dblayer.OnFileUploadFinished(filehash, filename, int64(fsize), "")
